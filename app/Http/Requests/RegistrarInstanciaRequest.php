@@ -23,7 +23,6 @@ class RegistrarInstanciaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_cliente' => 'required|exists:clientes,id',
             'nombre'     => 'required|string|max:255', // Nombre del PC
             'host'       => 'nullable|string|max:255',
             'ip'         => 'nullable|string|max:45',
@@ -32,7 +31,6 @@ class RegistrarInstanciaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'id_cliente.exists' => 'El cliente especificado no existe en nuestra base de datos.',
             'nombre.required'   => 'El nombre de la máquina es obligatorio para el registro.',
         ];
     }

@@ -15,15 +15,22 @@ Route::prefix('v1')->group(function () {
     //RUTAS CLIENTECONTROLLER
     //--------------------------
 
-    // 1. Registrar nueva instancia
-    Route::post('/registro', [ClienteController::class, 'registrarInstancia']);
 
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum', 'abilities:cliente'])->group(function(){
 
-        // 2. Consultar la última versión de un desarrollo concreto
+        // 1. Obtener el ID enviando el Token de Cliente
+        Route::get('/cliente', [ClienteController::class, 'obtenerCliente']);
+
+        // 2. Registrar nueva instancia
+        Route::post('/instancia', [ClienteController::class, 'registrarInstancia']);
+    });
+
+    Route::middleware(['auth:sanctum', 'abilities:instancia'])->group(function (){
+
+        // 3. Consultar la última versión de un desarrollo concreto
         Route::get('/actualizaciones', [ClienteController::class, 'actualizaciones']);
 
-        // 3. Confirmar instalación
+        // 4. Confirmar instalación
         Route::post('/instalaciones/resultado', [ClienteController::class, 'registrarResultado']);
     });
 
@@ -32,16 +39,16 @@ Route::prefix('v1')->group(function () {
     //RUTAS DESARROLLOCONTROLLER
     //--------------------------
 
-    // 4. Registrar nueva versión
+    // 5. Registrar nueva versión
     Route::post('/versiones', [DesarrolloController::class, 'registrarNuevaVersion']);
 
-    // 5. Listar la versión más reciente de cada desarrollo (también con buscador ?buscar=...)
+    // 6. Listar la versión más reciente de cada desarrollo (también con buscador ?buscar=...)
     Route::get('/desarrollos/ultimas', [DesarrolloController::class, 'obtenerUltimasVersiones']);
 
-    // 6. Ver todas las versiones de un desarrollo concreto
+    // 7. Ver todas las versiones de un desarrollo concreto
     Route::get('/desarrollos/{id}/versiones', [DesarrolloController::class, 'obtenerVersionesDesarrollo']);
 
-    // 7. Ver todos los adjuntos de una versión concreta
+    // 8. Ver todos los adjuntos de una versión concreta
     Route::get('/versiones/{id_version}/adjuntos', [DesarrolloController::class, 'obtenerAdjuntosVersion']);
 
 });

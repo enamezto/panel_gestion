@@ -21,7 +21,6 @@ return new class extends Migration
             $table->timestamp('fecha_alta')->useCurrent();
             $table->timestamp('ultima_conexion')->nullable();
             //$table->string('registro_token')->unique();
-            $table->timestamp('registro_fecha')->nullable();
             $table->string('ruta_listados')->nullable();
         });
     }

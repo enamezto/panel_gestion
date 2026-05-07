@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
         // Aquí le decimos a Laravel qué seeders tiene que ejecutar y en qué orden
         $this->call([
-            DatosPruebaSeeder::class,
+            DatosPruebaSeeder2::class,
         ]);
     }
 }

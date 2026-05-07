@@ -113,25 +113,25 @@ class ClienteController extends Controller
     }
 
     /**
-     * POST /api/v1/registro
+     * POST /api/v1/instancia
      * Registra una nueva instancia y genera el token único de seguridad.
      */
     public function registrarInstancia(RegistrarInstanciaRequest $request)
     {
         //$nuevoToken = \Illuminate\Support\Str::random(60);
+        $cliente = $request->user();
 
         $instancia = ClienteInstancia::create([
-            'id_cliente'      => $request->id_cliente,
+            'id_cliente'      => $cliente->id,
             'nombre'          => $request->nombre,
             'host'            => $request->host,
             'ip'              => $request->ip ?? $request->ip(),
             //'registro_token'  => $nuevoToken,
-            'registro_fecha'  => now(),
             'fecha_alta'      => now(),
             'ultima_conexion' => now(),
         ]);
 
-        $token = $instancia->createToken('agente-token')->plainTextToken;
+        $token = $instancia->createToken('instancia-token', ['instancia'])->plainTextToken;
 
         return response()->json([
             'mensaje'      => 'Instancia registrada con éxito',
@@ -139,6 +139,24 @@ class ClienteController extends Controller
             //'token'        => $nuevoToken
             'token'        => $token
         ], 201);
+    }
+
+    /**
+     * GET /api/v1/cliente
+     * Devuelve la información del cliente autenticado mediante el token de cliente.
+     * Este endpoint se usa una sola vez por instancia, durante el registro inicial.
+     */
+    public function obtenerCliente(Request $request){
+
+        $cliente = $request->user();
+
+        return response()->json([
+            'id_cliente'        => $cliente->id,
+            'nombre'            => $cliente->nombre,
+            'codigo'            => $cliente->codigo,
+            'version_a3erp'     => $cliente->version_a3erp,
+            'activo'            => $cliente->activo,
+        ], 200);
     }
 
 }
