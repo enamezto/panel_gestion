@@ -58,33 +58,33 @@ class DatosPruebaSeeder2 extends Seeder
         $tipoImagen      = AdjuntoTipo::create(['nombre' => 'Imagen']);
 
         // ====================================================
-        // 2. CATÁLOGO DE DESARROLLOS (Módulos disponibles)
+        // 2. CATÁLOGO DE DESARROLLOS (Desarrollos disponibles)
         // ====================================================
         $devFito = Desarrollo::create([
             'nombre' => 'Fitosanitarios a3ERP',
-            'descripcion' => 'Módulo para gestión de productos fitosanitarios',
-            'tipo' => 'Modulo',
+            'descripcion' => 'Desarrollo para gestión de productos fitosanitarios',
+            'tipo' => 'Desarrollo',
             'activo' => true,
         ]);
 
         $devTraza = Desarrollo::create([
             'nombre' => 'Trazabilidad Avanzada',
             'descripcion' => 'Trazabilidad completa de lotes y caducidades',
-            'tipo' => 'Modulo',
+            'tipo' => 'Desarrollo',
             'activo' => true,
         ]);
 
         $devLogistica = Desarrollo::create([
             'nombre' => 'Logística Integrada',
             'descripcion' => 'Gestión de almacenes y rutas de reparto',
-            'tipo' => 'Modulo',
+            'tipo' => 'Desarrollo',
             'activo' => true,
         ]);
 
         $devReportes = Desarrollo::create([
             'nombre' => 'Reportes Avanzados',
             'descripcion' => 'Informes personalizados y dashboards',
-            'tipo' => 'Modulo',
+            'tipo' => 'Desarrollo',
             'activo' => true,
         ]);
 

@@ -125,10 +125,12 @@ class ClienteController extends Controller
             'id_cliente'      => $cliente->id,
             'nombre'          => $request->nombre,
             'host'            => $request->host,
+            'tipo'            => $request->tipo,
             'ip'              => $request->ip ?? $request->ip(),
             //'registro_token'  => $nuevoToken,
             'fecha_alta'      => now(),
             'ultima_conexion' => now(),
+            'ruta_listados'   => $request->ruta_listados,
         ]);
 
         $token = $instancia->createToken('instancia-token', ['instancia'])->plainTextToken;

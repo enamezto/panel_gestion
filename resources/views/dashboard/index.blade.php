@@ -113,8 +113,12 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a href="#" class="text-blue-600 hover:text-blue-900 font-medium text-sm transition">
-                                    Ver Ficha &rarr;
+                                <a href="{{ route('clientes.show', $cliente['id']) }}"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors">
+                                    Ver Ficha
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
                                 </a>
                             </td>
                         </tr>

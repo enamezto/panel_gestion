@@ -26,22 +26,34 @@
         </a>
 
         {{-- Clientes --}}
-        <a href="#"
-           class="relative flex items-center min-h-[44px] px-3 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white">
+        <a href="{{ route('clientes.index') }}"
+            class="relative flex items-center min-h-[44px] px-3 py-2.5 rounded-lg text-sm font-medium
+                {{ request()->routeIs('clientes.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+            @if(request()->routeIs('clientes.*'))
+                <span class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-500 rounded-r"></span>
+            @endif
             <x-heroicon-o-users class="w-5 h-5 flex-shrink-0" />
             <span class="ml-3 sidebar-text whitespace-nowrap">Clientes</span>
         </a>
 
         {{-- Catálogo --}}
-        <a href="#"
-           class="relative flex items-center min-h-[44px] px-3 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white">
+        <a href="{{ route('catalogo.index') }}"
+            class="relative flex items-center min-h-[44px] px-3 py-2.5 rounded-lg text-sm font-medium
+                {{ request()->routeIs('catalogo.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+            @if(request()->routeIs('catalogo.*'))
+                <span class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-500 rounded-r"></span>
+            @endif
             <x-heroicon-o-cube class="w-5 h-5 flex-shrink-0" />
             <span class="ml-3 sidebar-text whitespace-nowrap">Catálogo</span>
         </a>
 
         {{-- Histórico --}}
-        <a href="#"
-           class="relative flex items-center min-h-[44px] px-3 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white">
+        <a href="{{ route('historico.index') }}"
+            class="relative flex items-center min-h-[44px] px-3 py-2.5 rounded-lg text-sm font-medium
+                {{ request()->routeIs('historico.*') ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+            @if(request()->routeIs('historico.*'))
+                <span class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-500 rounded-r"></span>
+            @endif
             <x-heroicon-o-clipboard-document-list class="w-5 h-5 flex-shrink-0" />
             <span class="ml-3 sidebar-text whitespace-nowrap">Histórico</span>
         </a>

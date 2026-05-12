@@ -145,9 +145,9 @@ class DesarrolloController extends Controller
             $resultadoFinal[] = [
                 'id_desarrollo_version' => $ultimaVersion->id, // El dato CLAVE para el siguiente paso
                 'nombre'                => $desarrollo->nombre,
-                'Major'                 => (string) $ultimaVersion->version_major,
-                'Minor'                 => (string) $ultimaVersion->version_minor,
-                'Patch'                 => (string) $ultimaVersion->version_patch,
+                'major'                 => (string) $ultimaVersion->version_major,
+                'minor'                 => (string) $ultimaVersion->version_minor,
+                'patch'                 => (string) $ultimaVersion->version_patch,
                 'fecha'                 => $ultimaVersion->fecha,
                 'descripcion_cambios'   => $ultimaVersion->descripcion_cambios,
                 'a3erpmin'              =>$ultimaVersion->version_a3erp_min,
