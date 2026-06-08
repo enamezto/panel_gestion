@@ -8,6 +8,7 @@ Panel de gestión web para el control de versiones y despliegue de módulos en e
 - Composer
 - PostgreSQL
 - Node.js y npm
+- Extensiones PHP: pdo_pgsql y pgsql habilitadas en php.ini
 
 ## Instalación
 
@@ -81,4 +82,10 @@ php artisan test
 
 ```
 GET http://127.0.0.1:8000/api/v1/health
+```
+
+## Notas
+En entornos Linux, puede ser necesario dar permisos de escritura a las carpetas de almacenamiento:
+```bash
+chmod -R 775 storage bootstrap/cache
 ```
