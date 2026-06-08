@@ -14,7 +14,7 @@ Panel de gestión web para el control de versiones y despliegue de módulos en e
 
 1. Clonar el repositorio:
 ```bash
-git clone <url-del-repositorio>
+git clone <https://github.com/enamezto/panel_gestion.git>
 cd panel-gestion
 ```
 
