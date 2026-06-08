@@ -8,7 +8,7 @@ Panel de gestión web para el control de versiones y despliegue de módulos en e
 - Composer
 - PostgreSQL
 - Node.js y npm
-- Extensiones PHP: pdo_pgsql y pgsql habilitadas en php.ini
+- Extensiones PHP: pdo_pgsql y pgsql habilitadas en `php.ini`
 
 ## Instalación
 
