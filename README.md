@@ -80,8 +80,10 @@ php artisan test
 
 ## Health check
 
+Para verificar que la API y la base de datos están operativas:
+
 ```
-GET http://127.0.0.1:8000/api/v1/health
+curl http://127.0.0.1:8000/api/v1/health -UseBasicParsing
 ```
 
 ## Notas
