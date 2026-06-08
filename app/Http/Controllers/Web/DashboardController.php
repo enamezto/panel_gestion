@@ -55,7 +55,7 @@ class DashboardController extends Controller
                     'ultima_conexion' => $cliente->instancias->max('ultima_conexion'),
                     'estado'          => $estado,
                 ];
-            });
+        });
 
         return view('dashboard.index', [
             'totalClientes'           => $totalClientes,
@@ -65,4 +65,5 @@ class DashboardController extends Controller
             'clientes'                => $clientes,
         ]);
     }
+
 }

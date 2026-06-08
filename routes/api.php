@@ -51,4 +51,9 @@ Route::prefix('v1')->group(function () {
     // 8. Ver todos los adjuntos de una versión concreta
     Route::get('/versiones/{id_version}/adjuntos', [DesarrolloController::class, 'obtenerAdjuntosVersion']);
 
+    //--------------------------
+    //RUTA TEST
+    //--------------------------
+    Route::get('/health', [\App\Http\Controllers\Api\HealthController::class, 'check']);
+
 });

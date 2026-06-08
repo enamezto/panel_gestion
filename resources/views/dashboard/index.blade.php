@@ -6,32 +6,23 @@
 @section('content')
 
     {{-- Tarjetas de KPI --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
 
         {{-- Clientes activos --}}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col transition hover:shadow-md">
+        <a href="{{ route('clientes.index') }}"
+        class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col transition hover:shadow-xl hover:border-gray-300 cursor-pointer">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Clientes Activos</h3>
-                <div class="p-2 bg-blue-50 rounded-lg">
-                    <x-heroicon-o-users class="w-6 h-6 text-blue-500" />
+                <div class="p-2 bg-gray-100 rounded-lg">
+                    <x-heroicon-o-users class="w-6 h-6 text-gray-500" />
                 </div>
             </div>
             <p class="text-3xl font-bold text-gray-800">{{ $totalClientes }}</p>
-        </div>
-
-        {{-- Instancias --}}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col transition hover:shadow-md">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Instancias (PCs)</h3>
-                <div class="p-2 bg-indigo-50 rounded-lg">
-                    <x-heroicon-o-computer-desktop class="w-6 h-6 text-indigo-500" />
-                </div>
-            </div>
-            <p class="text-3xl font-bold text-gray-800">{{ $totalInstancias }}</p>
-        </div>
+        </a>
 
         {{-- Clientes desactualizados --}}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col transition hover:shadow-md">
+        <a href="{{ route('clientes.index', ['estado' => 'desactualizado']) }}"
+        class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col transition hover:shadow-xl hover:border-orange-200 cursor-pointer">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Desactualizados</h3>
                 <div class="p-2 bg-orange-50 rounded-lg">
@@ -41,10 +32,11 @@
             <p class="text-3xl font-bold {{ $clientesDesactualizados > 0 ? 'text-orange-600' : 'text-gray-800' }}">
                 {{ $clientesDesactualizados }}
             </p>
-        </div>
+        </a>
 
         {{-- Errores recientes --}}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col transition hover:shadow-md">
+        <a href="{{ route('historico.index', ['resultado' => 'error']) }}"
+        class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col transition hover:shadow-xl hover:border-red-200 cursor-pointer">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Errores (7 días)</h3>
                 <div class="p-2 bg-red-50 rounded-lg">
@@ -54,7 +46,7 @@
             <p class="text-3xl font-bold {{ $erroresRecientes > 0 ? 'text-red-600' : 'text-gray-800' }}">
                 {{ $erroresRecientes }}
             </p>
-        </div>
+        </a>
 
     </div>
 
@@ -73,12 +65,12 @@
                         <th class="px-6 py-4 font-semibold text-center">Nº Instancias</th>
                         <th class="px-6 py-4 font-semibold">Última Conexión</th>
                         <th class="px-6 py-4 font-semibold text-center">Estado</th>
-                        <th class="px-6 py-4 font-semibold text-right">Acción</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 text-sm">
                     @forelse($clientes as $cliente)
-                        <tr class="hover:bg-gray-50 transition-colors">
+                        <tr class="hover:bg-gray-100 transition-colors cursor-pointer"
+                            onclick="window.location='{{ route('clientes.show', $cliente['id']) }}'">
                             <td class="px-6 py-4">
                                 <div class="font-bold text-gray-900">{{ $cliente['nombre'] }}</div>
                                 <div class="text-xs text-gray-500">ID: {{ $cliente['id'] }}</div>
@@ -103,28 +95,19 @@
                                 @elseif($cliente['estado'] === 'desactualizado')
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-800 border border-orange-200">
                                         <span class="w-2 h-2 rounded-full bg-orange-500 mr-2"></span>
-                                        Requiere Actualización
+                                        Requiere actualización
                                     </span>
                                 @elseif($cliente['estado'] === 'error')
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-200">
                                         <span class="w-2 h-2 rounded-full bg-red-500 mr-2"></span>
-                                        Fallo Reciente
+                                        Fallo reciente
                                     </span>
                                 @endif
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <a href="{{ route('clientes.show', $cliente['id']) }}"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors">
-                                    Ver Ficha
-                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </a>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                            <td colspan="5" class="px-6 py-12 text-center text-gray-500">
                                 <x-heroicon-o-inbox class="mx-auto h-12 w-12 text-gray-300 mb-3" />
                                 No hay clientes registrados o activos en el sistema en este momento.
                             </td>

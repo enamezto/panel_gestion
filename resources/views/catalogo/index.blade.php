@@ -9,7 +9,6 @@
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
         <form id="catalogo-form" method="GET" action="{{ route('catalogo.index') }}" class="flex flex-wrap items-center gap-4">
 
-            {{-- Buscador --}}
             <div class="flex-1 min-w-[300px]">
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -19,14 +18,12 @@
                         name="buscar"
                         value="{{ $busqueda }}"
                         placeholder="Buscar desarrollo por nombre..."
-                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-600 focus:border-gray-600 text-sm outline-none">
                 </div>
             </div>
 
-            {{-- Input oculto para controlar el estado de los inactivos --}}
             <input type="hidden" name="inactivos" id="inactivos-input" value="{{ $mostrarInactivos ? '1' : '0' }}">
 
-            {{-- Botón de estado dinámico --}}
             <button type="button"
                     onclick="toggleInactivos()"
                     class="px-4 py-2 text-sm font-medium rounded-lg transition flex items-center gap-2
@@ -42,25 +39,13 @@
                     Mostrar inactivos
                 @endif
             </button>
-
-            {{-- Botón crear nuevo desarrollo --}}
-            <a href="#"
-            class="ml-auto inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition">
-                <x-heroicon-o-plus class="w-4 h-4" />
-                Nuevo Desarrollo
-            </a>
         </form>
 
-        {{-- Script para alternar el valor y enviar el formulario --}}
         <script>
             function toggleInactivos() {
                 const input = document.getElementById('inactivos-input');
                 const form = document.getElementById('catalogo-form');
-
-                // Cambia el valor: si es '1' pasa a '0', si es '0' pasa a '1'
                 input.value = (input.value === '1') ? '0' : '1';
-
-                // Ejecuta el envío del formulario
                 form.submit();
             }
         </script>
@@ -85,14 +70,13 @@
                         <th class="px-6 py-4 font-semibold text-center">Última Versión</th>
                         <th class="px-6 py-4 font-semibold text-center">Compatibilidad a3ERP</th>
                         <th class="px-6 py-4 font-semibold text-center">Histórico</th>
-                        <th class="px-6 py-4 font-semibold text-right">Acción</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 text-sm">
                     @forelse($desarrollos as $dev)
-                        <tr class="hover:bg-gray-50 transition-colors {{ !$dev['activo'] ? 'opacity-60 bg-gray-50' : '' }}">
+                        <tr class="hover:bg-gray-100 transition-colors cursor-pointer {{ !$dev['activo'] ? 'opacity-60 bg-gray-50' : '' }}"
+                            onclick="window.location='{{ route('catalogo.show', $dev['id']) }}'">
 
-                            {{-- Nombre y Descripción --}}
                             <td class="px-6 py-4">
                                 <div class="font-bold text-gray-900 flex items-center">
                                     {{ $dev['nombre'] }}
@@ -105,14 +89,12 @@
                                 </div>
                             </td>
 
-                            {{-- Tipo de desarrollo --}}
                             <td class="px-6 py-4 text-center">
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-100 uppercase tracking-wide">
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200 uppercase tracking-wide">
                                     {{ $dev['tipo'] ?? 'Estándar' }}
                                 </span>
                             </td>
 
-                            {{-- Versión Actual --}}
                             <td class="px-6 py-4 text-center">
                                 <div class="font-mono font-bold text-gray-800">{{ $dev['version_actual'] }}</div>
                                 <div class="text-xs text-gray-400 mt-0.5">
@@ -120,7 +102,6 @@
                                 </div>
                             </td>
 
-                            {{-- Compatibilidad a3ERP --}}
                             <td class="px-6 py-4 text-center">
                                 @if($dev['version_actual'] !== '—')
                                     <div class="text-xs text-gray-600 bg-gray-100 inline-block px-2 py-1 rounded">
@@ -131,28 +112,16 @@
                                 @endif
                             </td>
 
-                            {{-- Número de versiones --}}
                             <td class="px-6 py-4 text-center">
                                 <span class="text-gray-600 font-medium">
                                     {{ $dev['total_versiones'] }} {{ $dev['total_versiones'] == 1 ? 'versión' : 'versiones' }}
                                 </span>
                             </td>
 
-                            {{-- Botón de acción --}}
-                            <td class="px-6 py-4 text-right">
-                                <a href="{{ route('catalogo.show', $dev['id']) }}"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-md transition-colors">
-                                    Gestionar
-                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                </a>
-                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                            <td colspan="5" class="px-6 py-12 text-center text-gray-500">
                                 <x-heroicon-o-cube class="mx-auto h-12 w-12 text-gray-300 mb-3" />
                                 @if($busqueda)
                                     No se han encontrado desarrollos que coincidan con "{{ $busqueda }}".

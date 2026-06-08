@@ -19,7 +19,7 @@ class ClienteInstancia extends Model
         'ip',
         'ultima_conexion',
         //'registro_token',
-        'registro_fecha',
+        //'registro_fecha',
         'ruta_listados'
     ];
 

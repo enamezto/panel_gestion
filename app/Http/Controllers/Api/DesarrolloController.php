@@ -70,8 +70,7 @@ class DesarrolloController extends Controller
             if(!$adjuntoBase){
                 $adjuntoBase = Adjunto::create([
                     'id_tipo'       => $tipoFinal,
-                    'nombre'        => $adjData['tipo'],
-                    'descripcion'   => $adjData['description'],
+                    'descripcion'   => $adjData['description'] ?? null,
                     'arbol_carpeta' => $adjData['ruta'],
                     'principal'     => $adjData['principal'] ?? null
                 ]);
@@ -83,14 +82,14 @@ class DesarrolloController extends Controller
                 'version_minor' => $adjData['minor'],
                 'version_patch' => $adjData['patch'],
                 'hash'          => $adjData['hash'],
-                'fecha'         => $adjData['date']
+                'fecha'         => $adjData['date'] ?? null
             ]);
 
             DesarrolloAdjunto::create([
                 'id_dev_version' => $nuevaVersion->id,
                 'id_adj_version' => $adjVersion->id,
                 'obligatorio' => $adjData['obligatorio'],
-                'orden' => $adjData['order'] ?? null,
+                'orden' => $adjData['order'] ?? 1,
             ]);
         }
 
@@ -177,7 +176,7 @@ class DesarrolloController extends Controller
                 $adjunto = $adjVersion->adjunto;
 
                 $adjuntos[] = [
-                'tipo'      => $adjunto->nombre,
+                'tipo'      => $adjunto->tipo->nombre ?? null,
                 'ruta'      => $adjunto->arbol_carpeta,
                 'major'     => (string) $adjVersion->version_major,
                 'minor'     => (string) $adjVersion->version_minor,

@@ -9,7 +9,7 @@
     {{-- Botón Volver --}}
     <div class="mb-6">
         <a href="{{ route('catalogo.index') }}"
-           class="inline-flex items-center text-sm text-gray-600 hover:text-blue-600 transition">
+           class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition">
             <x-heroicon-o-arrow-left class="w-4 h-4 mr-1" />
             Volver al catálogo
         </a>
@@ -30,7 +30,7 @@
                 <p class="text-gray-500 text-sm mt-1">{{ $desarrollo->descripcion ?? 'Sin descripción disponible' }}</p>
             </div>
             <div class="text-right">
-                <span class="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-indigo-50 text-indigo-700 border border-indigo-100 uppercase tracking-wide">
+                <span class="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-gray-100 text-gray-700 border border-gray-200 uppercase tracking-wide">
                     {{ $desarrollo->tipo }}
                 </span>
                 @if($versionVigente)
@@ -52,7 +52,7 @@
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
                     <h3 class="font-bold text-gray-800 flex items-center">
-                        <x-heroicon-o-clock class="w-5 h-5 mr-2 text-blue-500" />
+                        <x-heroicon-o-clock class="w-5 h-5 mr-2 text-gray-500" />
                         Historial de versiones
                     </h3>
                     <span class="text-xs font-medium bg-gray-200 text-gray-600 px-2 py-1 rounded-full">
@@ -76,14 +76,14 @@
                                 @php
                                     $esActual = $versionVigente && $version->id === $versionVigente->id;
                                 @endphp
-                                <tr class="hover:bg-gray-50 transition {{ $esActual ? 'bg-blue-50' : '' }}">
+                                <tr class="{{ $esActual ? 'bg-gray-100' : '' }}">
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-2">
                                             <span class="font-mono font-bold text-gray-900">
                                                 v{{ $version->version_major }}.{{ $version->version_minor }}.{{ $version->version_patch }}
                                             </span>
                                             @if($esActual)
-                                                <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold uppercase">
+                                                <span class="text-[10px] bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full font-bold uppercase">
                                                     Actual
                                                 </span>
                                             @endif
@@ -131,7 +131,7 @@
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
                     <h3 class="font-bold text-gray-800 flex items-center">
-                        <x-heroicon-o-users class="w-5 h-5 mr-2 text-green-500" />
+                        <x-heroicon-o-users class="w-5 h-5 mr-2 text-gray-500" />
                         Clientes con licencia
                     </h3>
                     <span class="text-xs font-medium bg-gray-200 text-gray-600 px-2 py-1 rounded-full">
@@ -144,13 +144,13 @@
                             $versionInstalada = $licencia->estadoActual?->version;
                             $desactualizado = $versionVigente && $versionInstalada && $versionInstalada->id !== $versionVigente->id;
                         @endphp
-                        <div class="px-6 py-4 hover:bg-gray-50 transition">
+                        <a href="{{ route('clientes.show', $licencia->cliente->id) }}"
+                        class="block px-6 py-4 hover:bg-gray-100 transition cursor-pointer">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <a href="{{ route('clientes.show', $licencia->cliente->id) }}"
-                                       class="font-medium text-gray-900 hover:text-blue-600 transition text-sm">
+                                    <p class="font-medium text-gray-900 text-sm">
                                         {{ $licencia->cliente->nombre }}
-                                    </a>
+                                    </p>
                                     <div class="text-xs text-gray-500 mt-0.5 font-mono">
                                         {{ $licencia->cliente->codigo }}
                                     </div>
@@ -170,7 +170,7 @@
                                     @endif
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     @empty
                         <div class="px-6 py-8 text-center text-gray-400">
                             <x-heroicon-o-users class="mx-auto h-8 w-8 text-gray-300 mb-2" />

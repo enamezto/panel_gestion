@@ -9,8 +9,7 @@
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
         <form action="{{ route('historico.index') }}" method="GET" class="flex flex-wrap items-center gap-4">
 
-            {{-- Buscador de texto (se mantiene igual) --}}
-            <div class="flex-1 min-w-[300px]">
+            <div class="w-4/5">
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <x-heroicon-o-magnifying-glass class="w-5 h-5 text-gray-400" />
@@ -19,16 +18,15 @@
                         name="buscar"
                         value="{{ $busqueda }}"
                         placeholder="Buscar por cliente, desarrollo o técnico..."
-                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm">
+                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gray-600 focus:border-gray-600 outline-none">
                 </div>
             </div>
 
-            {{-- Filtro de Resultado con envío automático --}}
             <select name="resultado"
-                    onchange="this.form.submit()" {{-- <--- Esto hace que al elegir, se envíe el formulario --}}
-                    class="px-4 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500 outline-none">
+                    onchange="this.form.submit()"
+                    class="w-64 px-4 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-gray-600 focus:border-gray-600 outline-none">
                 <option value="">Todos los resultados</option>
-                <option value="ok" {{ $resultado == 'ok' ? 'selected' : '' }}>Éxitos</option>
+                <option value="ok" {{ $resultado == 'ok' ? 'selected' : '' }}>Ok</option>
                 <option value="error" {{ $resultado == 'error' ? 'selected' : '' }}>Errores</option>
             </select>
 
@@ -50,35 +48,34 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100 text-sm">
                     @forelse($registros as $log)
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            {{-- Fecha humanizada y real --}}
+                        <tr class="hover:bg-gray-100 transition-colors cursor-pointer"
+                            onclick="window.location='{{ route('clientes.show', $log->instancia->cliente->id) }}'">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="font-medium text-gray-900">{{ \Carbon\Carbon::parse($log->fecha_actualizacion)->diffForHumans() }}</div>
                                 <div class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($log->fecha_actualizacion)->format('d/m/Y H:i') }}</div>
                             </td>
 
-                            {{-- Cliente e Instancia --}}
                             <td class="px-6 py-4">
-                                <div class="font-bold text-gray-800">{{ $log->instancia->cliente->nombre }}</div>
+                                <div class="font-bold text-gray-800">
+                                    {{ $log->instancia->cliente->nombre }}
+                                </div>
                                 <div class="flex items-center text-xs text-gray-500 mt-0.5">
                                     <x-heroicon-o-computer-desktop class="w-3 h-3 mr-1" />
                                     {{ $log->instancia->nombre }}
                                 </div>
                             </td>
 
-                            {{-- Desarrollo y Versión --}}
                             <td class="px-6 py-4">
                                 <div class="text-gray-900 font-medium">{{ $log->version->desarrollo->nombre }}</div>
-                                <div class="text-xs font-mono text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded inline-block mt-1">
+                                <div class="text-xs font-mono text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded inline-block mt-1">
                                     v{{ $log->version->version_major }}.{{ $log->version->version_minor }}.{{ $log->version->version_patch }}
                                 </div>
                             </td>
 
-                            {{-- Badge de Resultado --}}
                             <td class="px-6 py-4 text-center">
                                 @if($log->resultado === 'ok')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800">
-                                        Éxito
+                                        Ok
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-800">
@@ -87,7 +84,6 @@
                                 @endif
                             </td>
 
-                            {{-- Observaciones --}}
                             <td class="px-6 py-4 text-gray-500 italic max-w-xs truncate" title="{{ $log->observaciones }}">
                                 {{ $log->observaciones ?? 'Sin observaciones' }}
                             </td>
@@ -104,7 +100,6 @@
             </table>
         </div>
 
-        {{-- Paginación (Importante para el TFG) --}}
         <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
             {{ $registros->links() }}
         </div>

@@ -17,8 +17,6 @@ return new class extends Migration
             $table->foreignId('id_dev')->constrained('desarrollos')->onDelete('cascade');
             $table->boolean('activo')->default(true);
             $table->timestamp('fecha_alta')->useCurrent();
-
-            //para que un mismo cliente no se le asigne dos veces el mismo desarrollo
             $table->unique(['id_cliente', 'id_dev']);
         });
     }
